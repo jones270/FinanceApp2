@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Finance App</string>
+    <string name="create_account"><font color="#00ff00">text</font></string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="create">Create Account</string>
+    <string name="username">Username</string>
+    <string name="register">Register</string>
+    <string name="back_to_login">Back to Login</string>
+    <string name="title_activity_test">TestActivity</string>
+    <string name="todo">TODO</string>
+    <string name="create_transaction">Create Transaction</string>
+    <string name="create_transaction_title">Create Transaction</string>
+    <string name="dashboard_tab">Dashboard</string>
+    <string name="transaction_tab">Transactions</string>
+</resources>
