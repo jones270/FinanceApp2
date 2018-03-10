@@ -6,5 +6,11 @@
         android:title="@string/create_transaction"
         android:icon="@drawable/ic_add_circle_outline_white_24dp"
         android:orderInCategory="1"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="ifRoom"/>
+    <item android:id="@+id/Profile"
+        android:title="@string/Profile"/>
+    <item android:id ="@+id/Logout"
+        android:title="@string/Logout"
+        android:visible="true"
+        app:showAction="never"/>
 </menu>

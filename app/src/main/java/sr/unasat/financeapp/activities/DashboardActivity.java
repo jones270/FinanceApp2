@@ -10,9 +10,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import sr.unasat.financeapp.R;
+import sr.unasat.financeapp.entities.User;
 import sr.unasat.financeapp.fragments.DashboardFragment;
 import sr.unasat.financeapp.fragments.TransactionFragment;
 
@@ -50,13 +53,54 @@ public class DashboardActivity extends AppCompatActivity {
                 Intent intent = new Intent(this, TransactionActivity.class);
                 startActivity(intent);
                 return true;
+
+
+            case R.id.Profile:
+               // Toast.makeText(getApplicationContext(), "Welkom to my profile", Toast.LENGTH_LONG).show();
+                intent = new Intent(this, User.class);
+                startActivity(intent);
+                return true;
+
+            case R.id.Logout:
+                Toast.makeText(getApplicationContext(), "You logout succsfully", Toast.LENGTH_SHORT).show();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
+
         }
+
+
     }
 
+    public boolean onCreateOptionMenu(Menu menu){
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main,menu);
+        return super.onCreateOptionsMenu(menu);
+
+    }
+
+
+    public boolean onoptionsItemselected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.Logout) {
+            Logout();
+            return true;
+
+        }
+        return  super.onOptionsItemSelected(item);
+
+    }
+
+    private void Logout() {
+        Intent intent = new Intent(DashboardActivity.this,LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
+    }
+
+
     private class SectionsPagerAdapter extends FragmentPagerAdapter {
-        public SectionsPagerAdapter(FragmentManager fm) {
+        SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
         @Override
