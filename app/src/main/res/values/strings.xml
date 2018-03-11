@@ -14,6 +14,7 @@
     <string name="create_transaction_title">Create Transaction</string>
     <string name="dashboard_tab">Dashboard</string>
     <string name="transaction_tab">Transactions</string>
+    <string name="profile_tab">Profile</string>
     <string name="Profile">profile</string>
     <string name="Logout">logout</string>
 </resources>
