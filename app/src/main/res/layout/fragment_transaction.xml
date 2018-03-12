@@ -24,7 +24,7 @@
             app:tabSelectedTextColor="@color/colorPrimary"
             app:tabIndicatorColor="@color/colorPrimary"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             app:tabMode="scrollable"/>
     </android.support.design.widget.AppBarLayout>
 
