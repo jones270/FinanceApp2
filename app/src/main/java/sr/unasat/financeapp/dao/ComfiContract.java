@@ -33,5 +33,6 @@ public final class ComfiContract {
         public static final String COLUMN_NAME_ID = "id";
         public static final String COLUMN_NAME_AMOUNT = "amount";
         public static final String COLUMN_NAME_DATE = "date";
+
     }
 }
