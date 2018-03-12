@@ -22,4 +22,10 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="i_throw_fragment_with_tabs">I throw fragment with tabs</string>
+    <string name="balans_title">Balance</string>
+    <string name="empty_balance">0.00</string>
+    <string name="title_income">income:</string>
+    <string name="title_expense">expense:</string>
+    <string name="recent_expenses">Recent expenses</string>
+    <string name="view_all">view all</string>
 </resources>
