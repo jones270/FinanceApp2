@@ -48,6 +48,7 @@ public class TransactionFragment extends Fragment {
         adapter.addFragment(new ExpenseTransactionFragment(),"Expense");
         viewPager.setAdapter((PagerAdapter) adapter);
     }
+
     static class Adapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();
