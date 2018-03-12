@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import sr.unasat.financeapp.R;
-import sr.unasat.financeapp.dao.SqliteHelper;
+import sr.unasat.financeapp.dao.ComfiDbHelper;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -34,8 +34,8 @@ public class RegisterActivity extends AppCompatActivity {
     //Declaration Button
     private Button buttonRegister;
 
-    //Declaration SqliteHelper
-    private SqliteHelper sqliteHelper;
+    //Declaration ComfiDbHelper
+    private ComfiDbHelper comfiDbHelper;
 
     // TO-DO rest service url plaatsen
     private String URL = "";
@@ -49,7 +49,7 @@ public class RegisterActivity extends AppCompatActivity {
         initViews();
 
 
-        sqliteHelper = new SqliteHelper(this);
+        comfiDbHelper = new ComfiDbHelper(this);
 
         buttonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,10 +60,10 @@ public class RegisterActivity extends AppCompatActivity {
 //                    String Password = editTextPassword.getText().toString();
 //
 //                    //Check in the database is there any user associated with  this email
-//                    if (!sqliteHelper.isEmailExists(Email)) {
+//                    if (!comfiDbHelper.isEmailExists(Email)) {
 //
 //                        //Email does not exist now add new user to database
-//                        sqliteHelper.addUser(new User(null, UserName, Email, Password));
+//                        comfiDbHelper.addUser(new User(null, UserName, Email, Password));
 //                        Snackbar.make(buttonRegister, "User created successfully! Please Login ", Snackbar.LENGTH_LONG).show();
 //                        new Handler().postDelayed(new Runnable() {
 //                            @Override

@@ -42,24 +42,38 @@ public class TransactionAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        // Get view for row item
-        View rowView = mInflater.inflate(R.layout.list_item_transaction, parent, false);
-
-        // Get title element
-        TextView titleTextView = rowView.findViewById(R.id.transaction_item_title);
-
-        // Get date element
-        TextView dateTextView = rowView.findViewById(R.id.transaction_item_date);
-
-        // Get amount element
-        TextView amountTextView = rowView.findViewById(R.id.transaction_item_amount);
-
         Transaction transaction = (Transaction) getItem(position);
 
-        titleTextView.setText(transaction.title);
-        dateTextView.setText(transaction.date);
-        amountTextView.setText(transaction.amount);
+        ViewHolder holder;
 
-        return rowView;
+// 1
+        if(convertView == null) {
+
+            convertView = mInflater.inflate(R.layout.list_item_transaction, parent, false);
+
+            holder = new ViewHolder();
+            holder.titleTextView = (TextView) convertView.findViewById(R.id.transaction_item_title);
+            holder.dateTextView = (TextView) convertView.findViewById(R.id.transaction_item_date);
+            holder.amountTextView = (TextView) convertView.findViewById(R.id.transaction_item_amount);
+
+            convertView.setTag(holder);
+        }
+        else{
+
+            holder = (ViewHolder) convertView.getTag();
+        }
+
+
+        TextView titleTextView = holder.titleTextView;
+        TextView dateTextView = holder.dateTextView;
+        TextView amountTextView = holder.amountTextView;
+
+        return convertView;
+    }
+
+    private static class ViewHolder {
+        public TextView titleTextView;
+        public TextView dateTextView;
+        public TextView amountTextView;
     }
 }

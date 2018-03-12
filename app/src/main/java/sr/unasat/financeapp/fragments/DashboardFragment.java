@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import sr.unasat.financeapp.R;
+import sr.unasat.financeapp.entities.Transaction;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,32 +29,10 @@ public class DashboardFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        final ArrayList<Transaction> recipeList = Recipe.getRecipesFromFile("recipes.json", this);
         return inflater.inflate(R.layout.fragment_dashboard, container, false);
     }
 
-    private class StableArrayAdapter extends ArrayAdapter<String> {
 
-        HashMap<String, Integer> mIdMap = new HashMap<>();
-
-        public StableArrayAdapter(Context context, int textViewResourceId,
-                                  List<String> objects) {
-            super(context, textViewResourceId, objects);
-            for (int i = 0; i < objects.size(); ++i) {
-                mIdMap.put(objects.get(i), i);
-            }
-        }
-
-        @Override
-        public long getItemId(int position) {
-            String item = getItem(position);
-            return mIdMap.get(item);
-        }
-
-        @Override
-        public boolean hasStableIds() {
-            return true;
-        }
-
-    }
 
 }

@@ -5,39 +5,57 @@ package sr.unasat.financeapp.entities;
  */
 
 public class Transaction {
-    public String transactionId;
     public String id;
     public String type;
     public String title;
-    public String category;
     public String amount;
-    public String date;
-    public int recurring;
-    public String frequency;
-    public String startDate;
-    public String endDate;
+    public int date;
 
-    public Transaction(String transactionId,
-                                    String id,
-                                    String type,
-                                    String title,
-                                    String category,
-                                    String amount,
-                                    String date,
-                                    int recurring,
-                                    String frequency,
-                                    String startDate,
-                                    String endDate) {
-        this.transactionId = transactionId;
+    public Transaction(String id, String type, String title, String amount, int date) {
         this.id = id;
         this.type = type;
         this.title = title;
-        this.category = category;
         this.amount = amount;
         this.date = date;
-        this.recurring = recurring;
-        this.frequency = frequency;
-        this.startDate = startDate;
-        this.endDate = endDate;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getAmount() {
+        return amount;
+    }
+
+    public void setAmount(String amount) {
+        this.amount = amount;
+    }
+
+    public int getDate() {
+        return date;
+    }
+
+    public void setDate(int date) {
+        this.date = date;
     }
 }
