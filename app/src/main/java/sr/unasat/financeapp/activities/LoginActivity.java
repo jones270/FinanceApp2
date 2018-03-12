@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import sr.unasat.financeapp.R;
-import sr.unasat.financeapp.dao.SqliteHelper;
+import sr.unasat.financeapp.dao.ComfiDbHelper;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -34,8 +34,8 @@ public class LoginActivity extends AppCompatActivity {
     // Declaration Buttons
     Button buttonLogin;
 
-    // Declaration SqliteHelper
-    SqliteHelper sqliteHelper;
+    // Declaration ComfiDbHelper
+    ComfiDbHelper comfiDbHelper;
 
     //TODO: insert rest api link
     String URL = "";
@@ -44,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        sqliteHelper = new SqliteHelper(this);
+        comfiDbHelper = new ComfiDbHelper(this);
         //initCreateAccountTextView();
         initViews();
 
@@ -61,7 +61,7 @@ public class LoginActivity extends AppCompatActivity {
 //                    String Password = editTextPassword.getText().toString();
 //
 //                    //Authenticate user
-//                    User currentUser = sqliteHelper.Authenticate(new User(null, null, Email, Password));
+//                    User currentUser = comfiDbHelper.Authenticate(new User(null, null, Email, Password));
 //
 //                    //Check Authentication is successful or not
 //                    if (currentUser != null) {
