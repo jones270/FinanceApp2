@@ -2,6 +2,7 @@ package sr.unasat.financeapp.activities;
 
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -12,14 +13,22 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+
+import java.util.Calendar;
 
 import sr.unasat.financeapp.R;
 import sr.unasat.financeapp.fragments.DashboardFragment;
+import sr.unasat.financeapp.fragments.DatePickerFragment;
 import sr.unasat.financeapp.fragments.TransactionFragment;
 import sr.unasat.financeapp.fragments.GoalFragment;
 import sr.unasat.financeapp.fragments.ProfileFragment;
+import sr.unasat.financeapp.helpers.DateHelper;
 
-public class DashboardActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
+
+    Button dateButton;
+    private DialogFragment dateDialogfragment;
 
     private static int[] tabIcons = {
             R.drawable.ic_dashboard_white_24dp, //tab icon at postition 1
@@ -35,6 +44,14 @@ public class DashboardActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        dateButton = findViewById(R.id.dateButton);
+        dateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDatePickerDialog();
+            }
+        });
 
         //Attach the SectionsPagerAdapter to the ViewPager
         SectionsPagerAdapter pagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -48,6 +65,29 @@ public class DashboardActivity extends AppCompatActivity {
         tabLayout.getTabAt(1).setIcon(tabIcons[1]);
         tabLayout.getTabAt(2).setIcon(tabIcons[2]);
         tabLayout.getTabAt(3).setIcon(tabIcons[3]);
+    }
+
+    /**
+     * Handle the new set date here.
+     * @param year
+     * @param month
+     * @param day
+     */
+    public void onDateSet(int year, int month, int day){
+        Calendar c = Calendar.getInstance();
+        if(year == c.get(Calendar.YEAR) && month == c.get(Calendar.MONTH)) {
+            dateButton.setText(R.string.this_month);
+        }
+        else {
+            dateButton.setText(new DateHelper().monthIntToString(month)+" "+year);
+        }
+    }
+
+    private void showDatePickerDialog(){
+        if(dateDialogfragment == null) {
+            dateDialogfragment = new DatePickerFragment();
+        }
+        dateDialogfragment.show(getSupportFragmentManager(), "datePicker");
     }
 
     // Option menu
@@ -69,7 +109,7 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
     private void logout() {
-        Intent intent = new Intent(DashboardActivity.this,LoginActivity.class);
+        Intent intent = new Intent(MainActivity.this,LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();

@@ -2,7 +2,6 @@ package sr.unasat.financeapp.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout; // add dependency com.android.support:design
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -23,7 +22,6 @@ import java.util.Map;
 
 import sr.unasat.financeapp.R;
 import sr.unasat.financeapp.dao.SqliteHelper;
-import sr.unasat.financeapp.entities.User;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -70,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
 //                        Snackbar.make(buttonLogin, "Successfully Logged in!", Snackbar.LENGTH_LONG).show();
 //
 //                        //User Logged in Successfully Launch You home screen activity
-//                        Intent intent = new Intent(LoginActivity.this,DashboardActivity.class);
+//                        Intent intent = new Intent(LoginActivity.this,MainActivity.class);
 //                        startActivity(intent);
 //                        finish();
 //                    } else {
@@ -85,7 +83,7 @@ public class LoginActivity extends AppCompatActivity {
                         public void onResponse(String s) {
                             if(s.equals("true")){
                                 Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
-                                startActivity(new Intent(LoginActivity.this,DashboardActivity.class));
+                                startActivity(new Intent(LoginActivity.this,MainActivity.class));
                             }
                             else{
                                 Toast.makeText(LoginActivity.this, "Incorrect Details", Toast.LENGTH_LONG).show();
