@@ -15,47 +15,52 @@ import sr.unasat.financeapp.entities.Transaction;
  */
 
 public class GoalDao {
-//    private Context context;
-//    ComfiDbHelper cmDbHelper;
-//
-//    public GoalDao(Context context) {
-//        this.context = context;
-//    }
-//
-//    public long addTransaction(Transaction transaction){
-//        if(cmDbHelper == null){
-//            cmDbHelper = new ComfiDbHelper(context);
-//        }
-//
-//        // Gets the data repository in write mode
-//        SQLiteDatabase db = cmDbHelper.getWritableDatabase();
-//
-//        // Create a new map of values, where column names are the keys
-//        ContentValues values = new ContentValues();
-//        values.put(ComfiContract.GoalEntry.COLUMN_NAME_AMOUNT, goal.getType());
-//        values.put(ComfiContract.GoalEntry.COLUMN_NAME_DATE, goal.getAmount());
-//
-//        // Insert the new row, returning the primary key value of the new row
-//        long newRowId = db.insert(ComfiContract.GoalEntry.TABLE_NAME, null, values);
-//
-//        return newRowId;
-//    }
-//
-//    public Cursor getTotalExpenses(int dateInMiliSeconds{
+    private Context context;
+    ComfiDbHelper cmDbHelper;
+
+    public GoalDao(Context context) {
+        this.context = context;
+    }
+
+    public long addGoal(Goal goal){
+        if(cmDbHelper == null){
+            cmDbHelper = new ComfiDbHelper(context);
+        }
+
+        // Gets the data repository in write mode
+        SQLiteDatabase db = cmDbHelper.getWritableDatabase();
+
+        // Create a new map of values, where column names are the keys
+        ContentValues values = new ContentValues();
+        values.put(ComfiContract.GoalEntry.COLUMN_NAME_AMOUNT, goal.getAmount());
+        values.put(ComfiContract.GoalEntry.COLUMN_NAME_DATE, goal.getDate());
+
+        // Insert the new row, returning the primary key value of the new row
+        long newRowId = db.insert(ComfiContract.GoalEntry.TABLE_NAME, null, values);
+
+        return newRowId;
+    }
+
+//    public getTotalExpenses(int dateInMiliSeconds) {
 //        if(cmDbHelper == null){
 //            cmDbHelper = new ComfiDbHelper(context);
 //        }
 //
 //        SQLiteDatabase db = cmDbHelper.getReadableDatabase();
 //
-//        Cursor c = db.rawQuery("SELECT Sum(amount) AS TotalExpense FROM " + ComfiContract.GoalEntry.TABLE_NAME, "WHERE " + ComfiContract.TransactionEntry.COLUMN_NAME_AMOUNT + "= "Expense"" );
-//        if (c !=null) {
-//            c.moveToFirst();
+//        // method to query sum of amount in table transactions where type = Expense
+//        public Cursor sumFoodColumn(){
+//            Cursor c = db.query(true, DATABASE_TABLE, ALL_KEYS, KEY_FOOD + "=?", new String[]{"sum(food)" + KEY_FOOD}, null, null, null, null);
+//            if (c !=null) {
+//                c.moveToFirst();
+//            }
+//            return c;
 //        }
-//        return c;
-//    }
 //
-//    public ArrayList<Goal> getRecentGoal(int dateInMiliSeconds){
+//        return totalExpenses;
+//    }
+
+//    public ArrayList<Transaction> getRecentExpenses(int dateInMiliSeconds){
 //        if(cmDbHelper == null){
 //            cmDbHelper = new ComfiDbHelper(context);
 //        }
@@ -65,14 +70,15 @@ public class GoalDao {
 //        // Define a projection that specifies which columns from the database
 //        // you will actually use after this query.
 //        String[] projection = {
-//                ComfiContract.GoalEntry.COLUMN_NAME_ID,
-//                ComfiContract.GoalEntry.COLUMN_NAME_AMOUNT,
-//                ComfiContract.GoalEntry.COLUMN_NAME_DATE,
+//                ComfiContract.TransactionEntry.COLUMN_NAME_ID,
+//                ComfiContract.TransactionEntry.COLUMN_NAME_TITLE,
+//                ComfiContract.TransactionEntry.COLUMN_NAME_AMOUNT,
+//                ComfiContract.TransactionEntry.COLUMN_NAME_DATE,
 //        };
 //
 //        // Filter results WHERE "title" = 'My Title'
-//        String selection = ComfiContract.GoalEntry.COLUMN_NAME_DATE + " <= " + dateInMiliSeconds;
-//        String[] selectionArgs = {ComfiContract.GoalEntry.DEFAULT_GOAL_STRING};
+//        String selection = ComfiContract.TransactionEntry.COLUMN_NAME_TYPE + " = ?" + " AND " + ComfiContract.TransactionEntry.COLUMN_NAME_DATE + " <= " + dateInMiliSeconds;
+//        String[] selectionArgs = {ComfiContract.TransactionEntry.DEFAULT_EXPENSE_STRING};
 //
 //        // How you want the results sorted in the resulting Cursor
 //        String sortOrder =

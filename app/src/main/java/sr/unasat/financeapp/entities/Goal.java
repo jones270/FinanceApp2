@@ -5,18 +5,38 @@ package sr.unasat.financeapp.entities;
  */
 
 public class Goal {
-    public String goalId;
-    public String goalAmount;
-    public String goalStart;
-    public String goalEnd;
+    public int id;
+    public String amount;
+    public int date;
 
-    public Goal(String goalId,
-                String goalAmount,
-                String goalStart,
-                String goalEnd) {
-        this.goalId = goalId;
-        this.goalAmount = goalAmount;
-        this.goalStart = goalStart;
-        this.goalEnd = goalEnd;
+    public Goal(int id, String amount, int date) {
+        this.id = id;
+        this.amount = amount;
+        this.date = date;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getAmount() {
+        return amount;
+    }
+
+    public void setAmount(String amount) {
+        this.amount = amount;
+    }
+
+    public int getDate() {
+        return date;
+    }
+
+    public void setDate(int date) {
+        this.date = date;
+    }
+
 }

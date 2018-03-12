@@ -1,30 +1,30 @@
 package sr.unasat.financeapp.entities;
 
 public class User {
-    public String id;
-    public String userName;
+    public int id;
+    public String username;
     public String email;
 
-    public User(String id, String userName, String email, String password, String goal) {
+    public User(int id, String username, String email) {
         this.id = id;
-        this.userName = userName;
+        this.username = username;
         this.email = email;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUername(String username) {
+        this.username = username;
     }
 
     public String getEmail() {
