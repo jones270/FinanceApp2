@@ -8,6 +8,7 @@
     android:orientation="vertical"
     tools:context="sr.unasat.financeapp.activities.MainActivity">
 
+
     <android.support.design.widget.CoordinatorLayout
         android:id="@+id/main_content"
         android:layout_width="match_parent"
@@ -47,8 +48,6 @@
             android:onClick="onClickAdd"/>
 
     </android.support.design.widget.CoordinatorLayout>
-
-
 
 
 

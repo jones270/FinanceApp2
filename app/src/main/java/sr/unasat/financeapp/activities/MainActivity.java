@@ -26,6 +26,7 @@ import sr.unasat.financeapp.fragments.ProfileFragment;
 import sr.unasat.financeapp.helpers.DateHelper;
 
 public class MainActivity extends AppCompatActivity {
+    Button throwFragment;
 
     Button dateButton;
     private DialogFragment dateDialogfragment;
@@ -40,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dashboard);
+        setContentView(R.layout.activity_main);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -65,7 +66,13 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.getTabAt(1).setIcon(tabIcons[1]);
         tabLayout.getTabAt(2).setIcon(tabIcons[2]);
         tabLayout.getTabAt(3).setIcon(tabIcons[3]);
+
+
+//
     }
+
+
+
 
     /**
      * Handle the new set date here.
@@ -145,5 +152,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
 
 }

@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/FinanceApp2.iml" filepath="$PROJECT_DIR$/FinanceApp2.iml" />
-      <module fileurl="file://$PROJECT_DIR$/FinanceApp4.iml" filepath="$PROJECT_DIR$/FinanceApp4.iml" />
+      <module fileurl="file://C:\Users\Mitchell Jones\AndroidStudioProjects\FinanceApp2\FinanceApp4.iml" filepath="C:\Users\Mitchell Jones\AndroidStudioProjects\FinanceApp2\FinanceApp4.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
