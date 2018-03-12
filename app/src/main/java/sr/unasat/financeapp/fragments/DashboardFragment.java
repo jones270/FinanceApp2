@@ -29,7 +29,7 @@ public class DashboardFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final ArrayList<Transaction> recipeList = Recipe.getRecipesFromFile("recipes.json", this);
+//        final ArrayList<Transaction> recipeList = Recipe.getRecipesFromFile("recipes.json", this);
         return inflater.inflate(R.layout.fragment_dashboard, container, false);
     }
 

@@ -5,13 +5,13 @@ package sr.unasat.financeapp.entities;
  */
 
 public class Transaction {
-    public String id;
+    public int id;
     public String type;
     public String title;
     public String amount;
     public int date;
 
-    public Transaction(String id, String type, String title, String amount, int date) {
+    public Transaction(int id, String type, String title, String amount, int date) {
         this.id = id;
         this.type = type;
         this.title = title;
@@ -19,11 +19,11 @@ public class Transaction {
         this.date = date;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
