@@ -15,7 +15,7 @@ public class ComfiDbHelper extends SQLiteOpenHelper {
             + " ( "
             + ComfiContract.UserEntry.COLUMN_NAME_ID + " INTEGER PRIMARY KEY, "
             + ComfiContract.UserEntry.COLUMN_NAME__USER_NAME + " TEXT, "
-            + ComfiContract.UserEntry.COLUMN_NAME__EMAIL + " TEXT, "
+            + ComfiContract.UserEntry.COLUMN_NAME__EMAIL + " TEXT "
             + " ) ";
     private static final String SQL_DELETE_USER_ENTRIES = " DROP TABLE IF EXISTS " + ComfiContract.UserEntry.TABLE_NAME;
 
@@ -26,7 +26,7 @@ public class ComfiDbHelper extends SQLiteOpenHelper {
             + ComfiContract.TransactionEntry.COLUMN_NAME_TYPE + " TEXT, "
             + ComfiContract.TransactionEntry.COLUMN_NAME_TITLE + " TEXT, "
             + ComfiContract.TransactionEntry.COLUMN_NAME_AMOUNT + " REAL, "
-            + ComfiContract.TransactionEntry.COLUMN_NAME_DATE + " INT, "
+            + ComfiContract.TransactionEntry.COLUMN_NAME_DATE + " INT "
             + " ) ";
     private static final String SQL_DELETE_TRANSACTION_ENTRIES = " DROP TABLE IF EXISTS " + ComfiContract.TransactionEntry.TABLE_NAME;
 
@@ -35,7 +35,7 @@ public class ComfiDbHelper extends SQLiteOpenHelper {
             + " ( "
             + ComfiContract.GoalEntry.COLUMN_NAME_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + ComfiContract.GoalEntry.COLUMN_NAME_AMOUNT + " REAL, "
-            + ComfiContract.GoalEntry.COLUMN_NAME_DATE + " INT, "
+            + ComfiContract.GoalEntry.COLUMN_NAME_DATE + " INT "
             + " ) ";
     private static final String SQL_DELETE_GOAL_ENTRIES = " DROP TABLE IF EXISTS " + ComfiContract.GoalEntry.TABLE_NAME;
 

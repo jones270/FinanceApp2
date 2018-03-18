@@ -26,10 +26,9 @@ import sr.unasat.financeapp.fragments.ProfileFragment;
 import sr.unasat.financeapp.helpers.DateHelper;
 
 public class MainActivity extends AppCompatActivity {
-    Button throwFragment;
-
     Button dateButton;
     private DialogFragment dateDialogfragment;
+    public static String selectedDate;
 
     private static int[] tabIcons = {
             R.drawable.ic_dashboard_white_24dp, //tab icon at postition 1
@@ -66,8 +65,6 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.getTabAt(1).setIcon(tabIcons[1]);
         tabLayout.getTabAt(2).setIcon(tabIcons[2]);
         tabLayout.getTabAt(3).setIcon(tabIcons[3]);
-
-
 //
     }
 
@@ -81,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
      * @param day
      */
     public void onDateSet(int year, int month, int day){
+        selectedDate = year + "-" + month + "-" + day;
         Calendar c = Calendar.getInstance();
         if(year == c.get(Calendar.YEAR) && month == c.get(Calendar.MONTH)) {
             dateButton.setText(R.string.this_month);
@@ -124,11 +122,20 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClickAdd(View view) {
         Intent intentTransaction = new Intent(this, TransactionActivity.class);
-        startActivity(intentTransaction);
+        startActivityForResult(intentTransaction, 1);
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+//                (dashboardFragment).updateView(this, selectedDate);
+            }
+        }
     }
 
 
-    private class SectionsPagerAdapter extends FragmentPagerAdapter {
+        private class SectionsPagerAdapter extends FragmentPagerAdapter {
         SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
@@ -136,17 +143,18 @@ public class MainActivity extends AppCompatActivity {
         public int getCount() {
             return 4;
         }
+
         @Override
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return new DashboardFragment();
+                        return new DashboardFragment();
                 case 1:
-                    return new TransactionFragment();
+                        return new TransactionFragment();
                 case 2:
-                    return new GoalFragment();
+                        return new GoalFragment();
                 case 3:
-                    return new ProfileFragment();
+                        return new ProfileFragment();
             }
             return null;
         }
