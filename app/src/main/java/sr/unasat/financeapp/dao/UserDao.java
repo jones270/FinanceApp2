@@ -2,9 +2,13 @@ package sr.unasat.financeapp.dao;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 
+import java.util.ArrayList;
+
+import sr.unasat.financeapp.entities.Transaction;
 import sr.unasat.financeapp.entities.User;
 
 /**
@@ -20,33 +24,24 @@ public class UserDao {
         this.context = context;
     }
 
-    public long adUser(User user) {
-        if (cmDbHelper == null) {
+    public long addUser(User user){
+        if(cmDbHelper == null){
             cmDbHelper = new ComfiDbHelper(context);
-
         }
+
         // Gets the data repository in write mode
         SQLiteDatabase db = cmDbHelper.getWritableDatabase();
 
-
         // Create a new map of values, where column names are the keys
         ContentValues values = new ContentValues();
-        values.put(ComfiContract.UserEntry.COLUMN_NAME_ID, user.getId());
-        values.put(ComfiContract.UserEntry.COLUMN_NAME__USER_NAME, user.getUserName());
-        values.put(ComfiContract.UserEntry.COLUMN_NAME__EMAIL, user.getEmail());
+        values.put(ComfiContract.UserEntry.COLUMN_NAME_USER_NAME, user.getUsername());
+        values.put(ComfiContract.UserEntry.COLUMN_NAME_EMAIL, user.getEmail());
+
 
         // Insert the new row, returning the primary key value of the new row
-        long newRowId = db.insert(ComfiContract.TransactionEntry.TABLE_NAME, null, values);
-
-
+        long newRowId = db.insert(ComfiContract.UserEntry.TABLE_NAME, null, values);
 
         return newRowId;
     }
 
-
-public void CreateUser (User user){
-
-
-
-    }
 }
