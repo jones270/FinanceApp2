@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import sr.unasat.financeapp.R;
+import sr.unasat.financeapp.activities.MainActivity;
+import sr.unasat.financeapp.dao.TransactionDao;
 
 /**
  * A simple {@link Fragment} subclass.
