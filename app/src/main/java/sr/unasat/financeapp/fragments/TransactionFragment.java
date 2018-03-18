@@ -17,12 +17,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import sr.unasat.financeapp.R;
-import sr.unasat.financeapp.interfaces.Updateable;
+import sr.unasat.financeapp.activities.MainActivity;
+import sr.unasat.financeapp.dao.TransactionDao;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TransactionFragment extends Fragment implements Updateable {
+public class TransactionFragment extends Fragment {
     @Override
     public void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,11 +49,6 @@ public class TransactionFragment extends Fragment implements Updateable {
         adapter.addFragment(new IncomeTransactionFragment(),"income");
         adapter.addFragment(new ExpenseTransactionFragment(),"Expense");
         viewPager.setAdapter((PagerAdapter) adapter);
-    }
-
-    @Override
-    public void update(String date) {
-        System.out.println("updating transaction fragment");
     }
 
     static class Adapter extends FragmentPagerAdapter {
