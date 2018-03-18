@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.List;
 
 import sr.unasat.financeapp.entities.Transaction;
+import sr.unasat.financeapp.helpers.DateHelper;
 
 public class TransactionDao {
     Context context;
@@ -35,6 +36,8 @@ public class TransactionDao {
             values.put(ComfiContract.TransactionEntry.COLUMN_NAME_AMOUNT, transaction.getAmount());
             values.put(ComfiContract.TransactionEntry.COLUMN_NAME_DATE, new Date().getTime());
 
+            System.out.println(values);
+
             // Insert the new row, returning the primary key value of the new row
             long newRowId = db.insert(ComfiContract.TransactionEntry.TABLE_NAME, null, values);
             if (newRowId > 0) {
@@ -50,7 +53,7 @@ public class TransactionDao {
         return false;
     }
 
-    public ArrayList<Transaction> getRecentExpenses(String selectedDate){
+    public ArrayList<Transaction> getRecentExpenses(long date){
         ArrayList<Transaction> recentExpenses = new ArrayList<>();
 
         try {
@@ -66,7 +69,7 @@ public class TransactionDao {
             };
 
             // Filter results WHERE "title" = 'My Title'
-            String selection = ComfiContract.TransactionEntry.COLUMN_NAME_TYPE + " = ?" + " AND " + ComfiContract.TransactionEntry.COLUMN_NAME_DATE + " <= strftime('%d-%m-%Y,"  + selectedDate + ")";
+            String selection = ComfiContract.TransactionEntry.COLUMN_NAME_TYPE + " = ?" + " AND " + ComfiContract.TransactionEntry.COLUMN_NAME_DATE + " <= " + date;
             String[] selectionArgs = {ComfiContract.TransactionEntry.DEFAULT_EXPENSE_STRING};
 
             // How you want the results sorted in the resulting Cursor
@@ -102,27 +105,57 @@ public class TransactionDao {
         return recentExpenses;
     }
 
-    public float getBalance(String date){
-        float total = (float) 0.00;
+    public double getTotalIncome(long date){
+        double totalIncome = 0.00;
 
         db = cmDbHelper.getReadableDatabase();
 
-        Cursor cursor = db.rawQuery("SELECT SUM(" + ComfiContract.TransactionEntry.COLUMN_NAME_AMOUNT + ") as Total FROM " + ComfiContract.TransactionEntry.TABLE_NAME + " WHERE " + ComfiContract.TransactionEntry.COLUMN_NAME_DATE + " <=  strftime('%d-%m-%Y'," + date + ");", null);
+        String queryTotalIncome = "SELECT SUM(" + ComfiContract.TransactionEntry.COLUMN_NAME_AMOUNT + ") " +
+                                    "as totalIncome FROM " + ComfiContract.TransactionEntry.TABLE_NAME +
+                                    " WHERE " + ComfiContract.TransactionEntry.COLUMN_NAME_DATE + " <= " + date +
+                                    " AND " + ComfiContract.TransactionEntry.COLUMN_NAME_TYPE + " = '" + ComfiContract.TransactionEntry.DEFAULT_INCOME_STRING + "';";
 
-        if (cursor.moveToFirst()) {
-            total = (float) cursor.getInt(cursor.getColumnIndex("Total"));// get final total
-        }
-
-        System.out.println("Total: " + total);
+        System.out.println("income query: " + queryTotalIncome);
 
         try{
+            Cursor cursor = db.rawQuery(queryTotalIncome , null);
 
+            if (cursor.moveToFirst()) {
+                totalIncome = (double) cursor.getInt(cursor.getColumnIndex("totalIncome"));
+                System.out.println("In TransactionDao, total income is " + totalIncome);
+            }
         }catch (SQLException e) {
             e.printStackTrace();
         } finally {
             cmDbHelper.close();
         }
 
-        return total;
+        return totalIncome;
+    }
+
+    public double getTotalExpense(long date){
+        double totalExpense = 0.00;
+
+        db = cmDbHelper.getReadableDatabase();
+
+        String queryTotalExpense = "SELECT SUM(" + ComfiContract.TransactionEntry.COLUMN_NAME_AMOUNT + ") " +
+                "as totalExpense FROM " + ComfiContract.TransactionEntry.TABLE_NAME +
+                " WHERE " + ComfiContract.TransactionEntry.COLUMN_NAME_DATE + " <= " + date +
+                " AND " + ComfiContract.TransactionEntry.COLUMN_NAME_TYPE + " = '" + ComfiContract.TransactionEntry.DEFAULT_EXPENSE_STRING + "';";
+
+        try {
+            Cursor cursor = db.rawQuery(queryTotalExpense, null);
+
+            if(cursor.moveToFirst()){
+                totalExpense = (double) cursor.getInt(cursor.getColumnIndex("totalExpense"));
+                System.out.println("In TransactionDao, total expense is " + totalExpense);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            cmDbHelper.close();
+        }
+
+        return totalExpense;
     }
 }

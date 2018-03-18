@@ -8,15 +8,19 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import sr.unasat.financeapp.R;
+import sr.unasat.financeapp.activities.MainActivity;
+import sr.unasat.financeapp.interfaces.Updateable;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class GoalFragment extends Fragment {
+public class GoalFragment extends Fragment implements Updateable{
+    View view;
 
-
-    public GoalFragment() {
-        // Required empty public constructor
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // do something such as init data
     }
 
 
@@ -24,7 +28,13 @@ public class GoalFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_goal, container, false);
+        view = inflater.inflate(R.layout.fragment_goal, container, false);
+        update(MainActivity.selectedDate);
+        return view;
     }
 
+    @Override
+    public void update(String date) {
+        System.out.println("updating goal fragment");
+    }
 }

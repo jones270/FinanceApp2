@@ -1,6 +1,10 @@
 package sr.unasat.financeapp.helpers;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class DateHelper {
 
@@ -35,5 +39,21 @@ public class DateHelper {
                 return "--";
         }
 
+    }
+
+    public static long dateToMiliseconds(String givenDate){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.US);
+        Date date = null;
+        String inputString = " 23:59:59.999";
+        try {
+            date = sdf.parse(givenDate + inputString);
+            long miliseconds = date.getTime();
+            System.out.println("dateFormat: " + miliseconds);
+            return miliseconds;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
     }
 }

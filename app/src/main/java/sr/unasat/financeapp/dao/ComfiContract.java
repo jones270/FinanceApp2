@@ -24,8 +24,8 @@ public final class ComfiContract {
         public static final String COLUMN_NAME_AMOUNT = "amount";
         public static final String COLUMN_NAME_DATE = "date";
 
-        public static final String DEFAULT_EXPENSE_STRING = "expense";
-        public static final String DEFAULT_INCOME_STRING = "income";
+        public static final String DEFAULT_EXPENSE_STRING = "Expense";
+        public static final String DEFAULT_INCOME_STRING = "Income";
     }
 
     public static class GoalEntry implements BaseColumns {

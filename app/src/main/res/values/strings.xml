@@ -17,7 +17,7 @@
     <string name="profile_tab">Profile</string>
     <string name="Profile">profile</string>
     <string name="Logout">logout</string>
-    <string name="this_month">This month</string>
+    <string name="today">Today</string>
     <string name="title">Title</string>
     <string name="amount">Amount</string>
     <string name="date">Date</string>

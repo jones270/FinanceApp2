@@ -17,11 +17,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import sr.unasat.financeapp.R;
+import sr.unasat.financeapp.interfaces.Updateable;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TransactionFragment extends Fragment {
+public class TransactionFragment extends Fragment implements Updateable {
     @Override
     public void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +48,11 @@ public class TransactionFragment extends Fragment {
         adapter.addFragment(new IncomeTransactionFragment(),"income");
         adapter.addFragment(new ExpenseTransactionFragment(),"Expense");
         viewPager.setAdapter((PagerAdapter) adapter);
+    }
+
+    @Override
+    public void update(String date) {
+        System.out.println("updating transaction fragment");
     }
 
     static class Adapter extends FragmentPagerAdapter {

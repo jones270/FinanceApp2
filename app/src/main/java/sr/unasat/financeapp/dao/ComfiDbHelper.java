@@ -14,8 +14,8 @@ public class ComfiDbHelper extends SQLiteOpenHelper {
     private static final String SQL_CREATE_USER_ENTRIES = " CREATE TABLE " + ComfiContract.UserEntry.TABLE_NAME
             + " ( "
             + ComfiContract.UserEntry.COLUMN_NAME_ID + " INTEGER PRIMARY KEY, "
-            + ComfiContract.UserEntry.COLUMN_NAME__USER_NAME + " TEXT, "
-            + ComfiContract.UserEntry.COLUMN_NAME__EMAIL + " TEXT "
+            + ComfiContract.UserEntry.COLUMN_NAME_USER_NAME + " TEXT, "
+            + ComfiContract.UserEntry.COLUMN_NAME_EMAIL + " TEXT "
             + " ) ";
     private static final String SQL_DELETE_USER_ENTRIES = " DROP TABLE IF EXISTS " + ComfiContract.UserEntry.TABLE_NAME;
 

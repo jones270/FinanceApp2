@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,14 +20,18 @@ import sr.unasat.financeapp.R;
 import sr.unasat.financeapp.activities.MainActivity;
 import sr.unasat.financeapp.dao.TransactionDao;
 import sr.unasat.financeapp.entities.Transaction;
+import sr.unasat.financeapp.helpers.DateHelper;
+import sr.unasat.financeapp.interfaces.Updateable;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DashboardFragment extends Fragment {
+public class DashboardFragment extends Fragment implements Updateable{
     TransactionDao transactionDao;
     View view;
-    TextView balance;
+    TextView balanceText;
+    TextView incomeText;
+    TextView expenseText;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -39,16 +44,33 @@ public class DashboardFragment extends Fragment {
 //        final ArrayList<Transaction> recipeList = Recipe.getRecipesFromFile("recipes.json", this);
         view = inflater.inflate(R.layout.fragment_dashboard, container, false);
         transactionDao = new TransactionDao(getActivity());
-        updateView();
+        balanceText = view.findViewById(R.id.balans);
+        incomeText = view.findViewById(R.id.total_income);
+        expenseText = view.findViewById(R.id.total_expense);
+        update(MainActivity.selectedDate);
         return view;
     }
 
-    public void updateView(){
-        balance = view.findViewById(R.id.balans);
+    @Override
+    public void update(String date){
+        System.out.println("updating dashboard fragment");
+
         if(transactionDao == null){
             transactionDao = new TransactionDao(getActivity());
         }
-        balance.setText(Float.toString(transactionDao.getBalance(MainActivity.selectedDate)));
+
+        double totalIncome = transactionDao.getTotalIncome(DateHelper.dateToMiliseconds(date));
+        double totalExpense = transactionDao.getTotalExpense(DateHelper.dateToMiliseconds(date));
+        double balance = totalIncome - totalExpense;
+
+        incomeText.setText(returnStringCurrency(totalIncome));
+        expenseText.setText(returnStringCurrency(totalExpense));
+        balanceText.setText(returnStringCurrency(balance));
+    }
+
+    private String returnStringCurrency(double amount){
+        NumberFormat formatter = NumberFormat.getCurrencyInstance();
+        return formatter.format(amount);
     }
 
 }

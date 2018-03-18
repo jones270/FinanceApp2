@@ -26,6 +26,11 @@ import sr.unasat.financeapp.fragments.ProfileFragment;
 import sr.unasat.financeapp.helpers.DateHelper;
 
 public class MainActivity extends AppCompatActivity {
+    static final int NUM_FRAGMENTS = 4;
+    SectionsPagerAdapter pagerAdapter;
+    ViewPager viewPager;
+    TabLayout tabLayout;
+
     Button dateButton;
     private DialogFragment dateDialogfragment;
     public static String selectedDate;
@@ -42,10 +47,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //get toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        //remove title from toolbar
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        // get date button
         dateButton = findViewById(R.id.dateButton);
+        // set onClick listener datebutton
         dateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,23 +64,35 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // set selected date today
+        Calendar c = Calendar.getInstance();
+        selectedDate = formSelectedDate(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
+
         //Attach the SectionsPagerAdapter to the ViewPager
-        SectionsPagerAdapter pagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-        ViewPager pager = findViewById(R.id.pager);
-        pager.setAdapter(pagerAdapter);
+        pagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+
+        viewPager = findViewById(R.id.pager);
+        viewPager.setAdapter(pagerAdapter);
 
         //Attach the ViewPager to the TabLayout
-        TabLayout tabLayout = findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(pager);
-        tabLayout.getTabAt(0).setIcon(tabIcons[0]);
-        tabLayout.getTabAt(1).setIcon(tabIcons[1]);
-        tabLayout.getTabAt(2).setIcon(tabIcons[2]);
-        tabLayout.getTabAt(3).setIcon(tabIcons[3]);
-//
+        tabLayout = findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(viewPager);
+        setupTabIcons();
     }
 
+    private void setupTabIcons(){
+        if(tabLayout != null){
+            tabLayout.getTabAt(0).setIcon(tabIcons[0]);
+            tabLayout.getTabAt(1).setIcon(tabIcons[1]);
+            tabLayout.getTabAt(2).setIcon(tabIcons[2]);
+            tabLayout.getTabAt(3).setIcon(tabIcons[3]);
+        }
+    }
 
-
+    private void updateActivity(){
+        pagerAdapter.notifyDataSetChanged();
+        setupTabIcons();
+    }
 
     /**
      * Handle the new set date here.
@@ -78,14 +101,19 @@ public class MainActivity extends AppCompatActivity {
      * @param day
      */
     public void onDateSet(int year, int month, int day){
-        selectedDate = year + "-" + month + "-" + day;
+        selectedDate = formSelectedDate(year, month, day);
+        updateActivity();
         Calendar c = Calendar.getInstance();
-        if(year == c.get(Calendar.YEAR) && month == c.get(Calendar.MONTH)) {
-            dateButton.setText(R.string.this_month);
+        if(year == c.get(Calendar.YEAR) && month == c.get(Calendar.MONTH) && day == c.get(Calendar.DAY_OF_MONTH)) {
+            dateButton.setText(R.string.today);
         }
         else {
-            dateButton.setText(new DateHelper().monthIntToString(month)+" "+year);
+            dateButton.setText(day + " " + new DateHelper().monthIntToString(month)+" "+year);
         }
+    }
+
+    private String formSelectedDate(int year, int month, int day){
+        return year + "-" + String.format("%02d",month+1) + "-" + String.format("%02d",day);
     }
 
     private void showDatePickerDialog(){
@@ -130,18 +158,23 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
 //                (dashboardFragment).updateView(this, selectedDate);
+                System.out.println("Transaction made, update fragments now");
+                updateActivity();
+
             }
         }
     }
 
 
-        private class SectionsPagerAdapter extends FragmentPagerAdapter {
-        SectionsPagerAdapter(FragmentManager fm) {
+    public static class SectionsPagerAdapter extends FragmentPagerAdapter {
+
+        public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
+
         @Override
         public int getCount() {
-            return 4;
+            return NUM_FRAGMENTS;
         }
 
         @Override
@@ -159,6 +192,24 @@ public class MainActivity extends AppCompatActivity {
             return null;
         }
 
+        @Override
+        // To update fragment in ViewPager, we should override getItemPosition() method,
+        // in this method, we call the fragment's public updating method.
+        public int getItemPosition(Object object) {
+            if (object instanceof DashboardFragment) {
+                ((DashboardFragment) object).update(selectedDate);
+            } else if (object instanceof TransactionFragment) {
+                ((TransactionFragment) object).update(selectedDate);
+            } else if (object instanceof GoalFragment) {
+                System.out.println("now update goal fragment");
+                ((GoalFragment) object).update(selectedDate);
+            } else if (object instanceof ProfileFragment) {
+                System.out.println("now update profile fragment");
+                ((ProfileFragment) object).update(selectedDate);
+            }
+
+            return super.getItemPosition(object);
+        };
     }
 
 

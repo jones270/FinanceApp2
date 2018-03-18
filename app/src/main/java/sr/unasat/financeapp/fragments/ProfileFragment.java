@@ -9,11 +9,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import sr.unasat.financeapp.R;
+import sr.unasat.financeapp.interfaces.Updateable;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ProfileFragment extends Fragment {
+public class ProfileFragment extends Fragment implements Updateable{
 
 
     public ProfileFragment() {
@@ -28,4 +29,8 @@ public class ProfileFragment extends Fragment {
         return textView;
     }
 
+    @Override
+    public void update(String date) {
+        System.out.println("updating profile fragment");
+    }
 }

@@ -11,11 +11,12 @@ import java.util.ArrayList;
 
 import sr.unasat.financeapp.R;
 import sr.unasat.financeapp.entities.Transaction;
+import sr.unasat.financeapp.interfaces.Updateable;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ExpenseTransactionFragment extends Fragment {
+public class ExpenseTransactionFragment extends Fragment implements Updateable{
 
 
     public ExpenseTransactionFragment() {
@@ -26,10 +27,13 @@ public class ExpenseTransactionFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_expense_transaction, container, false);
     }
 
 
+    @Override
+    public void update(String date) {
+
+    }
 }
