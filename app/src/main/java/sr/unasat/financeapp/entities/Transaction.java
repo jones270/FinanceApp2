@@ -1,5 +1,7 @@
 package sr.unasat.financeapp.entities;
 
+import java.util.Date;
+
 /**
  * Created by Benito on 09-Mar-18.
  */
@@ -8,10 +10,10 @@ public class Transaction {
     public int id;
     public String type;
     public String title;
-    public String amount;
+    public double amount;
     public long date;
 
-    public Transaction(int id, String type, String title, String amount, int date) {
+    public Transaction(int id, String type, String title, double amount, long date) {
         this.id = id;
         this.type = type;
         this.title = title;
@@ -19,7 +21,7 @@ public class Transaction {
         this.date = date;
     }
 
-    public Transaction(String type, String title, String amount) {
+    public Transaction(String type, String title, double amount) {
         this.type = type;
         this.title = title;
         this.amount = amount;
@@ -49,11 +51,11 @@ public class Transaction {
         this.title = title;
     }
 
-    public String getAmount() {
+    public double getAmount() {
         return amount;
     }
 
-    public void setAmount(String amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
 
@@ -63,5 +65,16 @@ public class Transaction {
 
     public void setDate(long date) {
         this.date = date;
+    }
+
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "id=" + id +
+                ", type='" + type + '\'' +
+                ", title='" + title + '\'' +
+                ", amount='" + amount + '\'' +
+                ", date=" + date +
+                '}';
     }
 }

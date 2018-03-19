@@ -42,7 +42,7 @@ public class TransactionActivity extends AppCompatActivity {
 
         String typeValue = transactionType.getSelectedItem().toString();
         String titleValue = transactionTitle.getText().toString();
-        String amountValue = transactionAmount.getText().toString();
+        double amountValue = Double.parseDouble(transactionAmount.getText().toString());
 
         Transaction transaction = new Transaction(typeValue, titleValue, amountValue);
 

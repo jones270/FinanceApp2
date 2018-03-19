@@ -56,4 +56,12 @@ public class DateHelper {
 
         return 0;
     }
+
+    public static String milisecondsToDate(long miliseconds){
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(miliseconds);
+        return sdf.format(calendar.getTime());
+    }
 }

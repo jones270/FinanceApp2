@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="@dimen/page_padding"
     tools:context="sr.unasat.financeapp.fragments.DashboardFragment">
@@ -124,8 +124,9 @@
                 android:orientation="horizontal">
 
                 <Button
+                    android:id="@+id/button_recents"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:background="@android:color/transparent"
                     android:drawableEnd="@drawable/ic_arrow_down_red"
                     android:text="@string/recent_expenses"

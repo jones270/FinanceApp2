@@ -69,12 +69,8 @@ public class TransactionDao {
             };
 
             // Filter results WHERE "title" = 'My Title'
-            String selection = ComfiContract.TransactionEntry.COLUMN_NAME_TYPE + " = ?" + " AND " + ComfiContract.TransactionEntry.COLUMN_NAME_DATE + " <= " + date;
-            String[] selectionArgs = {ComfiContract.TransactionEntry.DEFAULT_EXPENSE_STRING};
-
-            // How you want the results sorted in the resulting Cursor
-            String sortOrder =
-                    ComfiContract.TransactionEntry.COLUMN_NAME_DATE + " ASC";
+            String selection = ComfiContract.TransactionEntry.COLUMN_NAME_TYPE + " = ?" + " AND " + ComfiContract.TransactionEntry.COLUMN_NAME_DATE + " <= ?";
+            String[] selectionArgs = {ComfiContract.TransactionEntry.DEFAULT_EXPENSE_STRING, String.valueOf(date)};
 
             Cursor cursor = db.query(
                     ComfiContract.TransactionEntry.TABLE_NAME,   // The table to query
@@ -83,19 +79,23 @@ public class TransactionDao {
                     selectionArgs,          // The values for the WHERE clause
                     null,          // don't group the rows
                     null,           // don't filter by row groups
-                    sortOrder,              // The sort order
+                    ComfiContract.TransactionEntry.COLUMN_NAME_DATE + " DESC",              // The sort order
                     "5"                   //limit
             );
 
-            while (cursor.moveToNext()){
-                Transaction transaction = new Transaction(
-                        cursor.getInt(0),
-                        cursor.getString(1),
-                        cursor.getString(2),
-                        cursor.getString(3),
-                        cursor.getInt(4));
-                recentExpenses.add(transaction);
+            if(cursor!=null && cursor.getCount() > 0){
+                while (cursor.moveToNext()){
+                    Transaction transaction = new Transaction(
+                            cursor.getInt(0),
+                            ComfiContract.TransactionEntry.DEFAULT_EXPENSE_STRING,
+                            cursor.getString(1),
+                            cursor.getDouble(2),
+                            cursor.getLong(3));
+                    System.out.println(transaction.toString());
+                    recentExpenses.add(transaction);
+                }
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -157,5 +157,13 @@ public class TransactionDao {
         }
 
         return totalExpense;
+    }
+
+    public ArrayList<Transaction> getAllExpense(long date){
+        return null;
+    }
+
+    public ArrayList<Transaction> getAllIncome(long date){
+        return null;
     }
 }

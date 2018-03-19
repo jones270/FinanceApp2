@@ -42,38 +42,20 @@ public class TransactionAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
+        // Get view for row item
+        View rowView = mInflater.inflate(R.layout.list_item_transaction, parent, false);
+
+        TextView titleTextView = rowView.findViewById(R.id.transaction_item_title);
+        TextView dateTextView = rowView.findViewById(R.id.transaction_item_date);
+        TextView amountTextView = rowView.findViewById(R.id.transaction_item_amount);
+
         Transaction transaction = (Transaction) getItem(position);
 
-        ViewHolder holder;
+        titleTextView.setText(transaction.getTitle());
+        dateTextView.setText(DateHelper.milisecondsToDate(transaction.getDate()));
+        amountTextView.setText(CurrencyHelper.returnStringCurrency(transaction.getAmount()));
 
-// 1
-        if(convertView == null) {
-
-            convertView = mInflater.inflate(R.layout.list_item_transaction, parent, false);
-
-            holder = new ViewHolder();
-            holder.titleTextView = (TextView) convertView.findViewById(R.id.transaction_item_title);
-            holder.dateTextView = (TextView) convertView.findViewById(R.id.transaction_item_date);
-            holder.amountTextView = (TextView) convertView.findViewById(R.id.transaction_item_amount);
-
-            convertView.setTag(holder);
-        }
-        else{
-
-            holder = (ViewHolder) convertView.getTag();
-        }
-
-
-        TextView titleTextView = holder.titleTextView;
-        TextView dateTextView = holder.dateTextView;
-        TextView amountTextView = holder.amountTextView;
-
-        return convertView;
+        return rowView;
     }
 
-    private static class ViewHolder {
-        public TextView titleTextView;
-        public TextView dateTextView;
-        public TextView amountTextView;
-    }
 }
