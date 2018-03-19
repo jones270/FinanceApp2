@@ -4,11 +4,13 @@ package sr.unasat.financeapp.fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -35,9 +37,11 @@ public class DashboardFragment extends Fragment implements Updateable{
     TextView balanceText, incomeText, expenseText;
 
     TransactionAdapter listAdapter;
-    ListView recentExpenseListView;
+    ListView recentsListView;
 
-    Button recentAccordionButton;
+    Button recentAccordionButton, viewAllRecents;
+
+    ViewPager viewPager;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,18 +57,30 @@ public class DashboardFragment extends Fragment implements Updateable{
         balanceText = view.findViewById(R.id.balans);
         incomeText = view.findViewById(R.id.total_income);
         expenseText = view.findViewById(R.id.total_expense);
-        recentExpenseListView = view.findViewById(R.id.recent_expenses_content);
+        recentsListView = view.findViewById(R.id.listview_recents);
         recentAccordionButton = view.findViewById(R.id.button_recents);
+        viewAllRecents = view.findViewById(R.id.button_view_all_recents);
+
+        viewPager = (ViewPager)getActivity().findViewById(R.id.pager);
 
         recentAccordionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(recentExpenseListView.getVisibility() != View.VISIBLE){
-                    recentExpenseListView.setVisibility(View.VISIBLE);
+                LinearLayout accordionRecentContent = view.findViewById(R.id.accordion_expense_content);
+
+                if(accordionRecentContent.getVisibility() != view.VISIBLE){
+                    accordionRecentContent.setVisibility(View.VISIBLE);
                     return;
                 }
 
-                recentExpenseListView.setVisibility(View.GONE);
+                accordionRecentContent.setVisibility(View.GONE);
+            }
+        });
+
+        viewAllRecents.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewPager.setCurrentItem(1);
             }
         });
         update(MainActivity.selectedDate);
@@ -90,10 +106,17 @@ public class DashboardFragment extends Fragment implements Updateable{
 
 
         //update recent expenses view
-        ArrayList<Transaction> recentExpenses = transactionDao.getRecentExpenses(DateHelper.dateToMiliseconds(date));
-
+        ArrayList<Transaction> recentExpenses = transactionDao.getRecents(DateHelper.dateToMiliseconds(date));
         listAdapter = new TransactionAdapter(getActivity(), recentExpenses);
-        recentExpenseListView.setAdapter(listAdapter);
+        recentsListView.setAdapter(listAdapter);
+
+        TextView no_recent = view.findViewById(R.id.no_recents);
+
+        if(!(recentExpenses.size() > 0)){
+            no_recent.setVisibility(View.VISIBLE);
+        }else{
+            no_recent.setVisibility(View.GONE);
+        }
     }
 
 

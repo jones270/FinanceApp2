@@ -31,7 +31,7 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), this, year, month, day);
-        datePickerDialog.getDatePicker().setMaxDate(new Date().getTime() );
+        datePickerDialog.getDatePicker().setMaxDate(new Date().getTime() + (1000 * 60 * 60 * 24));
         return datePickerDialog;
     }
 

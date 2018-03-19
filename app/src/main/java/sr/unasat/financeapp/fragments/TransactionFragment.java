@@ -19,11 +19,18 @@ import java.util.List;
 import sr.unasat.financeapp.R;
 import sr.unasat.financeapp.activities.MainActivity;
 import sr.unasat.financeapp.dao.TransactionDao;
+import sr.unasat.financeapp.interfaces.Updateable;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TransactionFragment extends Fragment {
+public class TransactionFragment extends Fragment implements Updateable{
+    static final int NUM_FRAGMENTS = 2;
+    ViewPager viewPager;
+    TabLayout tabs;
+    Adapter adapter;
+
+
     @Override
     public void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,21 +41,28 @@ public class TransactionFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_transaction, container, false);
+
         // Setting ViewPager for each Tabs
-        ViewPager viewPager = (ViewPager) view.findViewById(R.id.viewpager);
+        viewPager = view.findViewById(R.id.viewpager);
         setupViewPager(viewPager);
+
         // Set Tabs inside Toolbar
-        TabLayout tabs = (TabLayout) view.findViewById(R.id.result_tabs);
+        tabs = view.findViewById(R.id.result_tabs);
         tabs.setupWithViewPager(viewPager);
 
         return view;
     }
 
     private void setupViewPager(ViewPager viewPager){
-        Adapter adapter = new Adapter(getChildFragmentManager());
-        adapter.addFragment(new IncomeTransactionFragment(),"income");
+        adapter = new Adapter(getChildFragmentManager());
+        adapter.addFragment(new IncomeTransactionFragment(),"Income");
         adapter.addFragment(new ExpenseTransactionFragment(),"Expense");
-        viewPager.setAdapter((PagerAdapter) adapter);
+        viewPager.setAdapter(adapter);
+    }
+
+    @Override
+    public void update(String date) {
+        adapter.notifyDataSetChanged();
     }
 
     static class Adapter extends FragmentPagerAdapter {
@@ -77,6 +91,19 @@ public class TransactionFragment extends Fragment {
         public CharSequence getPageTitle(int position) {
             return mFragmentTitleList.get(position);
         }
+
+        @Override
+        // To update fragment in ViewPager, we should override getItemPosition() method,
+        // in this method, we call the fragment's public updating method.
+        public int getItemPosition(Object object) {
+            if (object instanceof IncomeTransactionFragment) {
+                ((IncomeTransactionFragment) object).update(MainActivity.selectedDate);
+            } else if (object instanceof ExpenseTransactionFragment) {
+                ((ExpenseTransactionFragment) object).update(MainActivity.selectedDate);
+            }
+
+            return super.getItemPosition(object);
+        };
     }
 
 
