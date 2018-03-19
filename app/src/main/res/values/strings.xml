@@ -41,4 +41,6 @@
     <string name="next">next</string>
     <string name="skip">skip</string>
     <string name="start" />
+    <string name="recent_transactions">recent_transaction</string>
+    <string name="no_recent_transactions">no_recent_transaction</string>
 </resources>
