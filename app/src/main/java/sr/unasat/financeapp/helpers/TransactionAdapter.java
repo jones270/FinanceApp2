@@ -2,6 +2,8 @@ package sr.unasat.financeapp.helpers;
 
 
 import android.content.Context;
+import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,12 +50,20 @@ public class TransactionAdapter extends BaseAdapter {
         TextView titleTextView = rowView.findViewById(R.id.transaction_item_title);
         TextView dateTextView = rowView.findViewById(R.id.transaction_item_date);
         TextView amountTextView = rowView.findViewById(R.id.transaction_item_amount);
+        TextView typeTextView = rowView.findViewById(R.id.transaction_item_type);
 
         Transaction transaction = (Transaction) getItem(position);
 
         titleTextView.setText(transaction.getTitle());
         dateTextView.setText(DateHelper.milisecondsToDate(transaction.getDate()));
         amountTextView.setText(CurrencyHelper.returnStringCurrency(transaction.getAmount()));
+        typeTextView.setText(transaction.getType());
+        System.out.println("transaction type: " + transaction.getType().equals("Income"));
+        if(transaction.getType().equals("Income")){
+            typeTextView.setTextColor(Color.parseColor("#00C853"));
+        }else{
+            typeTextView.setTextColor(Color.parseColor("#F44336"));
+        }
 
         return rowView;
     }

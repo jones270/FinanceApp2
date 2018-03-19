@@ -53,8 +53,8 @@ public class TransactionDao {
         return false;
     }
 
-    public ArrayList<Transaction> getRecentExpenses(long date){
-        ArrayList<Transaction> recentExpenses = new ArrayList<>();
+    public ArrayList<Transaction> getRecents(long date){
+        ArrayList<Transaction> recents = new ArrayList<>();
 
         try {
             db = cmDbHelper.getReadableDatabase();
@@ -63,14 +63,15 @@ public class TransactionDao {
             // you will actually use after this query.
             String[] projection = {
                     ComfiContract.TransactionEntry.COLUMN_NAME_ID,
+                    ComfiContract.TransactionEntry.COLUMN_NAME_TYPE,
                     ComfiContract.TransactionEntry.COLUMN_NAME_TITLE,
                     ComfiContract.TransactionEntry.COLUMN_NAME_AMOUNT,
                     ComfiContract.TransactionEntry.COLUMN_NAME_DATE,
             };
 
             // Filter results WHERE "title" = 'My Title'
-            String selection = ComfiContract.TransactionEntry.COLUMN_NAME_TYPE + " = ?" + " AND " + ComfiContract.TransactionEntry.COLUMN_NAME_DATE + " <= ?";
-            String[] selectionArgs = {ComfiContract.TransactionEntry.DEFAULT_EXPENSE_STRING, String.valueOf(date)};
+            String selection = ComfiContract.TransactionEntry.COLUMN_NAME_DATE + " <= ?";
+            String[] selectionArgs = {String.valueOf(date)};
 
             Cursor cursor = db.query(
                     ComfiContract.TransactionEntry.TABLE_NAME,   // The table to query
@@ -87,12 +88,12 @@ public class TransactionDao {
                 while (cursor.moveToNext()){
                     Transaction transaction = new Transaction(
                             cursor.getInt(0),
-                            ComfiContract.TransactionEntry.DEFAULT_EXPENSE_STRING,
                             cursor.getString(1),
-                            cursor.getDouble(2),
-                            cursor.getLong(3));
+                            cursor.getString(2),
+                            cursor.getDouble(3),
+                            cursor.getLong(4));
                     System.out.println(transaction.toString());
-                    recentExpenses.add(transaction);
+                    recents.add(transaction);
                 }
             }
 
@@ -102,7 +103,7 @@ public class TransactionDao {
             cmDbHelper.close();
         }
 
-        return recentExpenses;
+        return recents;
     }
 
     public double getTotalIncome(long date){
@@ -160,10 +161,104 @@ public class TransactionDao {
     }
 
     public ArrayList<Transaction> getAllExpense(long date){
-        return null;
+        ArrayList<Transaction> allExpenses = new ArrayList<>();
+
+        try {
+            db = cmDbHelper.getReadableDatabase();
+
+            // Define a projection that specifies which columns from the database
+            // you will actually use after this query.
+            String[] projection = {
+                    ComfiContract.TransactionEntry.COLUMN_NAME_ID,
+                    ComfiContract.TransactionEntry.COLUMN_NAME_TITLE,
+                    ComfiContract.TransactionEntry.COLUMN_NAME_AMOUNT,
+                    ComfiContract.TransactionEntry.COLUMN_NAME_DATE,
+            };
+
+            // Filter results WHERE "title" = 'My Title'
+            String selection = ComfiContract.TransactionEntry.COLUMN_NAME_TYPE + " = ?" + " AND " + ComfiContract.TransactionEntry.COLUMN_NAME_DATE + " <= ?";
+            String[] selectionArgs = {ComfiContract.TransactionEntry.DEFAULT_EXPENSE_STRING, String.valueOf(date)};
+
+            Cursor cursor = db.query(
+                    ComfiContract.TransactionEntry.TABLE_NAME,   // The table to query
+                    projection,             // The array of columns to return (pass null to get all)
+                    selection,              // The columns for the WHERE clause
+                    selectionArgs,          // The values for the WHERE clause
+                    null,          // don't group the rows
+                    null,           // don't filter by row groups
+                    ComfiContract.TransactionEntry.COLUMN_NAME_DATE + " DESC"  // The sort order
+            );
+
+            if(cursor!=null && cursor.getCount() > 0){
+                while (cursor.moveToNext()){
+                    Transaction transaction = new Transaction(
+                            cursor.getInt(0),
+                            ComfiContract.TransactionEntry.DEFAULT_EXPENSE_STRING,
+                            cursor.getString(1),
+                            cursor.getDouble(2),
+                            cursor.getLong(3));
+                    System.out.println(transaction.toString());
+                    allExpenses.add(transaction);
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            cmDbHelper.close();
+        }
+
+        return allExpenses;
     }
 
     public ArrayList<Transaction> getAllIncome(long date){
-        return null;
+        ArrayList<Transaction> allIncome = new ArrayList<>();
+
+        try {
+            db = cmDbHelper.getReadableDatabase();
+
+            // Define a projection that specifies which columns from the database
+            // you will actually use after this query.
+            String[] projection = {
+                    ComfiContract.TransactionEntry.COLUMN_NAME_ID,
+                    ComfiContract.TransactionEntry.COLUMN_NAME_TITLE,
+                    ComfiContract.TransactionEntry.COLUMN_NAME_AMOUNT,
+                    ComfiContract.TransactionEntry.COLUMN_NAME_DATE,
+            };
+
+            // Filter results WHERE "title" = 'My Title'
+            String selection = ComfiContract.TransactionEntry.COLUMN_NAME_TYPE + " = ?" + " AND " + ComfiContract.TransactionEntry.COLUMN_NAME_DATE + " <= ?";
+            String[] selectionArgs = {ComfiContract.TransactionEntry.DEFAULT_INCOME_STRING, String.valueOf(date)};
+
+            Cursor cursor = db.query(
+                    ComfiContract.TransactionEntry.TABLE_NAME,   // The table to query
+                    projection,             // The array of columns to return (pass null to get all)
+                    selection,              // The columns for the WHERE clause
+                    selectionArgs,          // The values for the WHERE clause
+                    null,          // don't group the rows
+                    null,           // don't filter by row groups
+                    ComfiContract.TransactionEntry.COLUMN_NAME_DATE + " DESC"  // The sort order
+            );
+
+            if(cursor!=null && cursor.getCount() > 0){
+                while (cursor.moveToNext()){
+                    Transaction transaction = new Transaction(
+                            cursor.getInt(0),
+                            ComfiContract.TransactionEntry.DEFAULT_EXPENSE_STRING,
+                            cursor.getString(1),
+                            cursor.getDouble(2),
+                            cursor.getLong(3));
+                    System.out.println(transaction.toString());
+                    allIncome.add(transaction);
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            cmDbHelper.close();
+        }
+
+        return allIncome;
     }
 }

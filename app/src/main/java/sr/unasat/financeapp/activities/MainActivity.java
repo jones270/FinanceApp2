@@ -199,13 +199,9 @@ public class MainActivity extends AppCompatActivity {
             if (object instanceof DashboardFragment) {
                 ((DashboardFragment) object).update(selectedDate);
             } else if (object instanceof TransactionFragment) {
-//                ((TransactionFragment) object).update(selectedDate);
+                ((TransactionFragment) object).update(selectedDate);
             } else if (object instanceof GoalFragment) {
-                System.out.println("now update goal fragment");
                 ((GoalFragment) object).update(selectedDate);
-            } else if (object instanceof ProfileFragment) {
-                System.out.println("now update profile fragment");
-                ((ProfileFragment) object).update(selectedDate);
             }
 
             return super.getItemPosition(object);

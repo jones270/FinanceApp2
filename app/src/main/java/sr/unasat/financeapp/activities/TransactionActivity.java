@@ -33,6 +33,7 @@ public class TransactionActivity extends AppCompatActivity {
         toolbar.setTitle("Create Transaction");
         setSupportActionBar(toolbar);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     public void addTransaction(View view) {

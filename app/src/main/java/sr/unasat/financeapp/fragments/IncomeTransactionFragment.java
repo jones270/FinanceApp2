@@ -9,11 +9,12 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import sr.unasat.financeapp.R;
+import sr.unasat.financeapp.interfaces.Updateable;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class IncomeTransactionFragment extends Fragment {
+public class IncomeTransactionFragment extends Fragment implements Updateable{
 
     private ListView mListView;
     public IncomeTransactionFragment() {
@@ -29,4 +30,8 @@ public class IncomeTransactionFragment extends Fragment {
 
     }
 
+    @Override
+    public void update(String date) {
+
+    }
 }
