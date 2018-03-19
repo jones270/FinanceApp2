@@ -39,4 +39,7 @@
     <string name="create_goal">Create Goal</string>
     <string name="expended">Expended</string>
     <string name="goal">Goal</string>
+    <string name="next">Next</string>
+    <string name="skip">Skip</string>
+    <string name="start">Start</string>
 </resources>
