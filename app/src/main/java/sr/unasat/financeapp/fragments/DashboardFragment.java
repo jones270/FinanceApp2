@@ -53,7 +53,7 @@ public class DashboardFragment extends Fragment implements Updateable{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 //        final ArrayList<Transaction> recipeList = Recipe.getRecipesFromFile("recipes.json", this);
         view = inflater.inflate(R.layout.fragment_dashboard, container, false);
-        transactionDao = new TransactionDao(getActivity());
+
         balanceText = view.findViewById(R.id.balans);
         incomeText = view.findViewById(R.id.total_income);
         expenseText = view.findViewById(R.id.total_expense);
@@ -61,7 +61,7 @@ public class DashboardFragment extends Fragment implements Updateable{
         recentAccordionButton = view.findViewById(R.id.button_recents);
         viewAllRecents = view.findViewById(R.id.button_view_all_recents);
 
-        viewPager = (ViewPager)getActivity().findViewById(R.id.pager);
+        viewPager = getActivity().findViewById(R.id.pager);
 
         recentAccordionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,21 +83,20 @@ public class DashboardFragment extends Fragment implements Updateable{
                 viewPager.setCurrentItem(1);
             }
         });
-        update(MainActivity.selectedDate);
+        update(DateHelper.dateToMiliseconds(MainActivity.selectedDate));
         return view;
     }
 
     @Override
-    public void update(String date){
-        System.out.println("updating dashboard fragment");
+    public void update(long date){
 
         if(transactionDao == null){
             transactionDao = new TransactionDao(getActivity());
         }
 
         //update balance view
-        double totalIncome = transactionDao.getTotalIncome(DateHelper.dateToMiliseconds(date));
-        double totalExpense = transactionDao.getTotalExpense(DateHelper.dateToMiliseconds(date));
+        double totalIncome = transactionDao.getTotalIncome(date);
+        double totalExpense = transactionDao.getTotalExpense(date);
         double balance = totalIncome - totalExpense;
 
         incomeText.setText(CurrencyHelper.returnStringCurrency(totalIncome));
@@ -106,7 +105,7 @@ public class DashboardFragment extends Fragment implements Updateable{
 
 
         //update recent expenses view
-        ArrayList<Transaction> recentExpenses = transactionDao.getRecents(DateHelper.dateToMiliseconds(date));
+        ArrayList<Transaction> recentExpenses = transactionDao.getRecents(date);
         listAdapter = new TransactionAdapter(getActivity(), recentExpenses);
         recentsListView.setAdapter(listAdapter);
 

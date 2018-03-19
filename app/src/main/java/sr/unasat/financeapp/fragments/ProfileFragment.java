@@ -14,7 +14,7 @@ import sr.unasat.financeapp.interfaces.Updateable;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ProfileFragment extends Fragment implements Updateable{
+public class ProfileFragment extends Fragment{
 
 
     public ProfileFragment() {
@@ -29,8 +29,4 @@ public class ProfileFragment extends Fragment implements Updateable{
         return textView;
     }
 
-    @Override
-    public void update(String date) {
-        System.out.println("updating profile fragment");
-    }
 }

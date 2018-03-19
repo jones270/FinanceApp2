@@ -19,6 +19,7 @@ import java.util.List;
 import sr.unasat.financeapp.R;
 import sr.unasat.financeapp.activities.MainActivity;
 import sr.unasat.financeapp.dao.TransactionDao;
+import sr.unasat.financeapp.helpers.DateHelper;
 import sr.unasat.financeapp.interfaces.Updateable;
 
 /**
@@ -61,7 +62,7 @@ public class TransactionFragment extends Fragment implements Updateable{
     }
 
     @Override
-    public void update(String date) {
+    public void update(long date) {
         adapter.notifyDataSetChanged();
     }
 
@@ -97,9 +98,9 @@ public class TransactionFragment extends Fragment implements Updateable{
         // in this method, we call the fragment's public updating method.
         public int getItemPosition(Object object) {
             if (object instanceof IncomeTransactionFragment) {
-                ((IncomeTransactionFragment) object).update(MainActivity.selectedDate);
+                ((IncomeTransactionFragment) object).update(DateHelper.dateToMiliseconds(MainActivity.selectedDate));
             } else if (object instanceof ExpenseTransactionFragment) {
-                ((ExpenseTransactionFragment) object).update(MainActivity.selectedDate);
+                ((ExpenseTransactionFragment) object).update(DateHelper.dateToMiliseconds(MainActivity.selectedDate));
             }
 
             return super.getItemPosition(object);

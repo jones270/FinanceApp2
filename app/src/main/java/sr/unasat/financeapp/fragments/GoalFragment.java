@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import sr.unasat.financeapp.R;
 import sr.unasat.financeapp.activities.MainActivity;
+import sr.unasat.financeapp.helpers.DateHelper;
 import sr.unasat.financeapp.interfaces.Updateable;
 
 /**
@@ -29,12 +30,12 @@ public class GoalFragment extends Fragment implements Updateable{
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_goal, container, false);
-        update(MainActivity.selectedDate);
+        update(DateHelper.dateToMiliseconds(MainActivity.selectedDate));
         return view;
     }
 
     @Override
-    public void update(String date) {
+    public void update(long date) {
         System.out.println("updating goal fragment");
     }
 }

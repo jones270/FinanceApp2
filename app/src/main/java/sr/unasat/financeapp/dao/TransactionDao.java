@@ -170,6 +170,7 @@ public class TransactionDao {
             // you will actually use after this query.
             String[] projection = {
                     ComfiContract.TransactionEntry.COLUMN_NAME_ID,
+                    ComfiContract.TransactionEntry.COLUMN_NAME_TYPE,
                     ComfiContract.TransactionEntry.COLUMN_NAME_TITLE,
                     ComfiContract.TransactionEntry.COLUMN_NAME_AMOUNT,
                     ComfiContract.TransactionEntry.COLUMN_NAME_DATE,
@@ -193,11 +194,11 @@ public class TransactionDao {
                 while (cursor.moveToNext()){
                     Transaction transaction = new Transaction(
                             cursor.getInt(0),
-                            ComfiContract.TransactionEntry.DEFAULT_EXPENSE_STRING,
                             cursor.getString(1),
-                            cursor.getDouble(2),
-                            cursor.getLong(3));
-                    System.out.println(transaction.toString());
+                            cursor.getString(2),
+                            cursor.getDouble(3),
+                            cursor.getLong(4));
+//                    System.out.println(transaction.toString());
                     allExpenses.add(transaction);
                 }
             }
@@ -221,6 +222,7 @@ public class TransactionDao {
             // you will actually use after this query.
             String[] projection = {
                     ComfiContract.TransactionEntry.COLUMN_NAME_ID,
+                    ComfiContract.TransactionEntry.COLUMN_NAME_TYPE,
                     ComfiContract.TransactionEntry.COLUMN_NAME_TITLE,
                     ComfiContract.TransactionEntry.COLUMN_NAME_AMOUNT,
                     ComfiContract.TransactionEntry.COLUMN_NAME_DATE,
@@ -244,11 +246,11 @@ public class TransactionDao {
                 while (cursor.moveToNext()){
                     Transaction transaction = new Transaction(
                             cursor.getInt(0),
-                            ComfiContract.TransactionEntry.DEFAULT_EXPENSE_STRING,
                             cursor.getString(1),
-                            cursor.getDouble(2),
-                            cursor.getLong(3));
-                    System.out.println(transaction.toString());
+                            cursor.getString(2),
+                            cursor.getDouble(3),
+                            cursor.getLong(4));
+//                    System.out.println(transaction.toString());
                     allIncome.add(transaction);
                 }
             }

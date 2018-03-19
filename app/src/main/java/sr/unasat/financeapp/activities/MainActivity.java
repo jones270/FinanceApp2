@@ -197,11 +197,11 @@ public class MainActivity extends AppCompatActivity {
         // in this method, we call the fragment's public updating method.
         public int getItemPosition(Object object) {
             if (object instanceof DashboardFragment) {
-                ((DashboardFragment) object).update(selectedDate);
+                ((DashboardFragment) object).update(DateHelper.dateToMiliseconds(selectedDate));
             } else if (object instanceof TransactionFragment) {
-                ((TransactionFragment) object).update(selectedDate);
+                ((TransactionFragment) object).update(DateHelper.dateToMiliseconds(selectedDate));
             } else if (object instanceof GoalFragment) {
-                ((GoalFragment) object).update(selectedDate);
+                ((GoalFragment) object).update(DateHelper.dateToMiliseconds(selectedDate));
             }
 
             return super.getItemPosition(object);

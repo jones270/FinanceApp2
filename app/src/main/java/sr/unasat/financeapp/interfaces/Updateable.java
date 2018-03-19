@@ -2,5 +2,5 @@ package sr.unasat.financeapp.interfaces;
 
 
 public interface Updateable {
-    public void update(String date);
+    public void update(long date);
 }
