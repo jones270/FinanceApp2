@@ -6,13 +6,17 @@ package sr.unasat.financeapp.entities;
 
 public class Goal {
     public int id;
-    public String amount;
-    public int date;
+    public double amount;
+    public long date;
 
-    public Goal(int id, String amount, int date) {
+    public Goal(int id, double amount, long date) {
         this.id = id;
         this.amount = amount;
         this.date = date;
+    }
+
+    public Goal(double amount) {
+        this.amount = amount;
     }
 
     public int getId() {
@@ -23,20 +27,28 @@ public class Goal {
         this.id = id;
     }
 
-    public String getAmount() {
+    public double getAmount() {
         return amount;
     }
 
-    public void setAmount(String amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
 
-    public int getDate() {
+    public long getDate() {
         return date;
     }
 
-    public void setDate(int date) {
+    public void setDate(long date) {
         this.date = date;
     }
 
+    @Override
+    public String toString() {
+        return "Goal{" +
+                "id=" + id +
+                ", amount=" + amount +
+                ", date=" + date +
+                '}';
+    }
 }

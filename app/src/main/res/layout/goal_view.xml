@@ -73,9 +73,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/large_margin"
-                card_view:donut_progress="0"
+                card_view:donut_progress="12"
                 card_view:donut_max="100"
-                card_view:donut_unfinished_color="@color/colorPrimary"
+                card_view:donut_unfinished_color="@color/colorLightGray"
                 card_view:donut_finished_color="@color/colorPrimary"
                 card_view:donut_text_color="@color/colorPrimary"/>
 

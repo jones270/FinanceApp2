@@ -15,7 +15,8 @@ public class ComfiDbHelper extends SQLiteOpenHelper {
             + " ( "
             + ComfiContract.UserEntry.COLUMN_NAME_ID + " INTEGER PRIMARY KEY, "
             + ComfiContract.UserEntry.COLUMN_NAME_USER_NAME + " TEXT, "
-            + ComfiContract.UserEntry.COLUMN_NAME_EMAIL + " TEXT "
+            + ComfiContract.UserEntry.COLUMN_NAME_EMAIL + " TEXT, "
+            + ComfiContract.UserEntry.COLUMN_NAME_PASSWORD + " TEXT "
             + " ) ";
     private static final String SQL_DELETE_USER_ENTRIES = " DROP TABLE IF EXISTS " + ComfiContract.UserEntry.TABLE_NAME;
 
@@ -42,7 +43,7 @@ public class ComfiDbHelper extends SQLiteOpenHelper {
     //DATABASE NAME
     public static final String DATABASE_NAME = "comfi_db";
     //DATABASE VERSION
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 2;
 
 
     public ComfiDbHelper(Context context) {

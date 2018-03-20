@@ -14,6 +14,7 @@ public final class ComfiContract {
         public static final String COLUMN_NAME_ID = "user_id";
         public static final String COLUMN_NAME_USER_NAME = "username";
         public static final String COLUMN_NAME_EMAIL = "email";
+        public static final String COLUMN_NAME_PASSWORD = "password";
     }
 
     public static  class TransactionEntry implements BaseColumns {

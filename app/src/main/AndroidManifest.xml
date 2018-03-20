@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="sr.unasat.financeapp">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,7 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.WelcomeActivity"/>
+        <activity android:name=".activities.WelcomeActivity" />
         <activity android:name=".activities.LoginActivity" />
         <activity android:name=".activities.MainActivity">
             <intent-filter>
@@ -24,7 +26,7 @@
             android:label="@string/create_transaction"
             android:parentActivityName=".activities.MainActivity" />
         <activity android:name=".activities.ProfileActivity" />
-
+        <activity android:name=".activities.GoalDetailActivity"></activity>
     </application>
 
 </manifest>

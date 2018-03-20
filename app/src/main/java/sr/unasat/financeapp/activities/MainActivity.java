@@ -14,10 +14,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.util.Calendar;
 
 import sr.unasat.financeapp.R;
+import sr.unasat.financeapp.dao.UserDao;
 import sr.unasat.financeapp.fragments.DashboardFragment;
 import sr.unasat.financeapp.fragments.DatePickerFragment;
 import sr.unasat.financeapp.fragments.TransactionFragment;
@@ -26,7 +28,7 @@ import sr.unasat.financeapp.fragments.ProfileFragment;
 import sr.unasat.financeapp.helpers.DateHelper;
 
 public class MainActivity extends AppCompatActivity {
-    static final int NUM_FRAGMENTS = 4;
+    static final int NUM_FRAGMENTS = 3;
     SectionsPagerAdapter pagerAdapter;
     ViewPager viewPager;
     TabLayout tabLayout;
@@ -38,8 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private static int[] tabIcons = {
             R.drawable.ic_dashboard_white_24dp, //tab icon at postition 1
             R.drawable.ic_attach_money_white_24dp, //tab icon at postition 2
-            R.drawable.ic_stars_white_24dp, //tab icon at postition 3
-            R.drawable.ic_person_white_24dp //tab icon at postition 4
+            R.drawable.ic_person_white_24dp //tab icon at postition 3
     };
 
     @Override
@@ -85,7 +86,6 @@ public class MainActivity extends AppCompatActivity {
             tabLayout.getTabAt(0).setIcon(tabIcons[0]);
             tabLayout.getTabAt(1).setIcon(tabIcons[1]);
             tabLayout.getTabAt(2).setIcon(tabIcons[2]);
-            tabLayout.getTabAt(3).setIcon(tabIcons[3]);
         }
     }
 
@@ -142,10 +142,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void logout() {
-        Intent intent = new Intent(MainActivity.this,LoginActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-        finish();
+        UserDao userDao = new UserDao(this);
+        if(userDao.logUserOut()){
+            Intent intent = new Intent(MainActivity.this,LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish();
+        }else{
+            Toast.makeText(this, "Failed to logout", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     public void onClickAdd(View view) {
@@ -185,8 +191,6 @@ public class MainActivity extends AppCompatActivity {
                 case 1:
                         return new TransactionFragment();
                 case 2:
-                        return new GoalFragment();
-                case 3:
                         return new ProfileFragment();
             }
             return null;
@@ -200,8 +204,6 @@ public class MainActivity extends AppCompatActivity {
                 ((DashboardFragment) object).update(DateHelper.dateToMiliseconds(selectedDate));
             } else if (object instanceof TransactionFragment) {
                 ((TransactionFragment) object).update(DateHelper.dateToMiliseconds(selectedDate));
-            } else if (object instanceof GoalFragment) {
-                ((GoalFragment) object).update(DateHelper.dateToMiliseconds(selectedDate));
             }
 
             return super.getItemPosition(object);

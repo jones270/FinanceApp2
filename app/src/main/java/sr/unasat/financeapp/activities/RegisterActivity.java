@@ -1,6 +1,8 @@
 package sr.unasat.financeapp.activities;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout; // add dependency com.android.support:design
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -22,6 +24,8 @@ import java.util.Map;
 
 import sr.unasat.financeapp.R;
 import sr.unasat.financeapp.dao.ComfiDbHelper;
+import sr.unasat.financeapp.dao.UserDao;
+import sr.unasat.financeapp.entities.User;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -34,11 +38,10 @@ public class RegisterActivity extends AppCompatActivity {
     //Declaration Button
     private Button buttonRegister;
 
-    //Declaration ComfiDbHelper
-    private ComfiDbHelper comfiDbHelper;
+    private UserDao userDao;
 
     // TO-DO rest service url plaatsen
-    private String URL = "";
+//    private String URL = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,62 +51,67 @@ public class RegisterActivity extends AppCompatActivity {
         initTextViewLogin();
         initViews();
 
-
-        comfiDbHelper = new ComfiDbHelper(this);
-
         buttonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                if(userDao == null){
+                    userDao = new UserDao(RegisterActivity.this);
+                }
                 if (validate()) {
-//                    String UserName = editTextFullName.getText().toString();
-//                    String Email = editTextEmail.getText().toString();
-//                    String Password = editTextPassword.getText().toString();
-//
-//                    //Check in the database is there any user associated with  this email
-//                    if (!comfiDbHelper.isEmailExists(Email)) {
-//
-//                        //Email does not exist now add new user to database
-//                        comfiDbHelper.addUser(new User(null, UserName, Email, Password));
-//                        Snackbar.make(buttonRegister, "User created successfully! Please Login ", Snackbar.LENGTH_LONG).show();
-//                        new Handler().postDelayed(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                finish();
+                    String userName = editTextFullName.getText().toString();
+                    String email = editTextEmail.getText().toString();
+                    String password = editTextPassword.getText().toString();
+
+                    //Check in the database is there any user associated with  this email
+                    if (!userDao.isEmailExists(email)) {
+
+                        //Email does not exist now add new user to database
+                        boolean status = userDao.registerUser(new User(0, userName, email, password));
+
+                        if(status){
+                            Snackbar.make(buttonRegister, "User created successfully! Please Login ", Snackbar.LENGTH_LONG).show();
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    finish();
+                                }
+                            }, Snackbar.LENGTH_LONG);
+                        }
+
+                    }else {
+
+                        //Email exists with email input provided so show error user already exist
+                        Snackbar.make(buttonRegister, "User already exists, login or choose another email ", Snackbar.LENGTH_LONG).show();
+                    }
+
+//                    StringRequest request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+//                        @Override
+//                        public void onResponse(String s) {
+//                            if (s.equals("true")) {
+//                                Toast.makeText(RegisterActivity.this, "Registration Successful", Toast.LENGTH_LONG).show();
+//                            } else {
+//                                Toast.makeText(RegisterActivity.this, "Can't Register", Toast.LENGTH_LONG).show();
 //                            }
-//                        }, Snackbar.LENGTH_LONG);
-//                    }else {
+//                        }
+//                    }, new Response.ErrorListener() {
+//                        @Override
+//                        public void onErrorResponse(VolleyError volleyError) {
+//                            Toast.makeText(RegisterActivity.this, "Some error occurred -> " + volleyError, Toast.LENGTH_LONG).show();
+//                        }
+//                    }) {
+//                        @Override
+//                        protected Map<String, String> getParams() throws AuthFailureError {
+//                            Map<String, String> parameters = new HashMap<String, String>();
+//                            parameters.put("fullname", editTextFullName.getText().toString());
+//                            parameters.put("email", editTextEmail.getText().toString());
+//                            parameters.put("password", editTextPassword.getText().toString());
+//                            return parameters;
+//                        }
+//                    };
 //
-//                        //Email exists with email input provided so show error user already exist
-//                        Snackbar.make(buttonRegister, "User already exists with same email ", Snackbar.LENGTH_LONG).show();
-//                    }
-
-                    StringRequest request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String s) {
-                            if (s.equals("true")) {
-                                Toast.makeText(RegisterActivity.this, "Registration Successful", Toast.LENGTH_LONG).show();
-                            } else {
-                                Toast.makeText(RegisterActivity.this, "Can't Register", Toast.LENGTH_LONG).show();
-                            }
-                        }
-                    }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError volleyError) {
-                            Toast.makeText(RegisterActivity.this, "Some error occurred -> " + volleyError, Toast.LENGTH_LONG).show();
-                        }
-                    }) {
-                        @Override
-                        protected Map<String, String> getParams() throws AuthFailureError {
-                            Map<String, String> parameters = new HashMap<String, String>();
-                            parameters.put("fullname", editTextFullName.getText().toString());
-                            parameters.put("email", editTextEmail.getText().toString());
-                            parameters.put("password", editTextPassword.getText().toString());
-                            return parameters;
-                        }
-                    };
-
-                    RequestQueue rQueue = Volley.newRequestQueue(RegisterActivity.this);
-                    rQueue.add(request);
+//                    RequestQueue rQueue = Volley.newRequestQueue(RegisterActivity.this);
+//                    rQueue.add(request);
                 }
             }
         });
