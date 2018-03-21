@@ -53,6 +53,21 @@
             android:inputType="textPassword" />
     </android.support.design.widget.TextInputLayout>
 
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Select currency"
+        android:textStyle="bold"
+        android:textSize="@dimen/normal_text_size"/>
+
+    <Spinner
+        android:id="@+id/editprofile_currency_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </Spinner>
+
     <Button
         android:id="@+id/button_update_profile"
         android:layout_width="match_parent"

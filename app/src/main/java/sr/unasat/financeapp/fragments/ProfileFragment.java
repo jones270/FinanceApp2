@@ -10,9 +10,12 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -59,6 +62,8 @@ public class ProfileFragment extends Fragment{
 
     private EditText editTextFullName, editTextEmail, editTextPassword;
     private TextInputLayout textInputLayoutUserName, textInputLayoutEmail, textInputLayoutPassword;
+
+    private Spinner currencySpinner;
 
     private User user;
 
@@ -114,9 +119,13 @@ public class ProfileFragment extends Fragment{
     }
 
     private void setupUser(User user){
+        if(userDao == null){
+            userDao = new UserDao(getActivity());
+        }
+
         textViewUsername.setText(user.getUsername());
         textViewEmail.setText(user.getEmail());
-        textViewSelectedCurrency.setText(selectedCurrency);
+        textViewSelectedCurrency.setText(userDao.getSelectedCurrency());
     }
 
     private void initProfileView(){
@@ -145,7 +154,6 @@ public class ProfileFragment extends Fragment{
 
     //this method is used to connect XML views to its Objects
     private void initEditView() {
-        getCurrencyData();
 
         editTextEmail = view.findViewById(R.id.editprofile_editTextEmail);
         editTextPassword = view.findViewById(R.id.editprofile_editTextPassword);
@@ -153,7 +161,30 @@ public class ProfileFragment extends Fragment{
         textInputLayoutEmail = view.findViewById(R.id.editprofile_textInputLayoutEmail);
         textInputLayoutPassword = view.findViewById(R.id.editprofile_textInputLayoutPassword);
         textInputLayoutUserName = view.findViewById(R.id.editprofile_textInputLayoutFullName);
+        currencySpinner = view.findViewById(R.id.editprofile_currency_spinner);
         btnSaveEdit = view.findViewById(R.id.button_update_profile);
+
+        ArrayList<Currency> currencies = CurrenciesIntentService.currencies;
+
+        if(currencies != null){
+            ArrayAdapter<Currency> adapter = new ArrayAdapter<Currency>(getActivity(), R.layout.simple_spinner_dropdown_item, currencies );
+            adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
+
+            currencySpinner.setAdapter(adapter);
+        }
+
+        currencySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                userDao.updateSelectedCurrency(currencySpinner.getSelectedItem().toString());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
 
         btnSaveEdit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -217,44 +248,6 @@ public class ProfileFragment extends Fragment{
         }
 
         return valid;
-    }
-
-    private void getCurrencyData() {
-        // Instantiate the RequestQueue.
-        RequestQueue queue = Volley.newRequestQueue(getActivity());
-        final String ALL_CURRENCIES = "http://www.localeplanet.com/api/auto/currencymap.json";
-
-        // Request a string response from the provided URL.
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, ALL_CURRENCIES,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        List<Currency> currencies = mapJsonToCountryObject(response);
-                        System.out.println(currencies);
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getActivity(), "Something went wrong in getting currencies", Toast.LENGTH_SHORT).show();
-            }
-        });
-        // Add the request to the RequestQueue.
-        queue.add(stringRequest);
-    }
-
-
-    private List<Currency> mapJsonToCountryObject(String jsonObject) {
-        ObjectMapper mapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-
-        List<Currency> currencyList = new ArrayList<>();
-
-        try {
-            currencyList = mapper.readValue(jsonObject, new TypeReference<List<Currency>>() {});
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("Er is wat fout gegaan bij het parsen van de json data");
-        }
-        return currencyList;
     }
 
 

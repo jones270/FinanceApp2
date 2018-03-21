@@ -99,9 +99,9 @@ public class DashboardFragment extends Fragment implements Updateable{
         double totalExpense = transactionDao.getTotalExpense(date);
         double balance = totalIncome - totalExpense;
 
-        incomeText.setText(CurrencyHelper.returnStringCurrency(totalIncome));
-        expenseText.setText(CurrencyHelper.returnStringCurrency(totalExpense));
-        balanceText.setText(CurrencyHelper.returnStringCurrency(balance));
+        incomeText.setText(CurrencyHelper.returnStringCurrency(totalIncome, getActivity()));
+        expenseText.setText(CurrencyHelper.returnStringCurrency(totalExpense, getActivity()));
+        balanceText.setText(CurrencyHelper.returnStringCurrency(balance, getActivity()));
 
 
         //update recent expenses view

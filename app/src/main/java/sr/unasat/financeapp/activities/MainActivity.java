@@ -20,6 +20,7 @@ import java.util.Calendar;
 
 import sr.unasat.financeapp.R;
 import sr.unasat.financeapp.dao.UserDao;
+import sr.unasat.financeapp.fragments.CurrenciesIntentService;
 import sr.unasat.financeapp.fragments.DashboardFragment;
 import sr.unasat.financeapp.fragments.DatePickerFragment;
 import sr.unasat.financeapp.fragments.TransactionFragment;
@@ -64,6 +65,9 @@ public class MainActivity extends AppCompatActivity {
                 showDatePickerDialog();
             }
         });
+
+        Intent currencyIntent = new Intent(this, CurrenciesIntentService.class);
+        startService(currencyIntent);
 
         // set selected date today
         Calendar c = Calendar.getInstance();

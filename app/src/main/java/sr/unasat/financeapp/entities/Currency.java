@@ -20,8 +20,8 @@ public class Currency {
         this.rounding = rounding;
     }
 
-    public Currency(){
-
+    public Currency(String symbol){
+        this.symbol = symbol;
     }
 
     public String getSymbol() {
@@ -66,12 +66,6 @@ public class Currency {
 
     @Override
     public String toString() {
-        return "Currency{" +
-                "symbol='" + symbol + '\'' +
-                ", code='" + code + '\'' +
-                ", symbol_native='" + symbol_native + '\'' +
-                ", decimal_digits='" + decimal_digits + '\'' +
-                ", rounding='" + rounding + '\'' +
-                '}';
+        return symbol;
     }
 }

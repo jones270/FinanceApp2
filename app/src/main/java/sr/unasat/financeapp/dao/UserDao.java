@@ -24,8 +24,9 @@ public class UserDao {
     ComfiDbHelper cmDbHelper;
     SQLiteDatabase db;
 
-    private static final String PREFERENCE_LOGGED_IN_KEY = "isLoggedIn";
-    private static final String PREFERENCE_USER_ID_KEY = "loggedInUser";
+    public static final String PREFERENCE_LOGGED_IN_KEY = "isLoggedIn";
+    public static final String PREFERENCE_USER_ID_KEY = "loggedInUser";
+    public static final String PREFERENCE_SELECTED_CURRENCY_KEY = "selectedCurrency";
 
     public UserDao(Context context) {
         this.context = context;
@@ -211,4 +212,13 @@ public class UserDao {
     }
 
 
+    public String getSelectedCurrency() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getString(PREFERENCE_SELECTED_CURRENCY_KEY, "SRD");
+    }
+
+    public void updateSelectedCurrency(String s) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        prefs.edit().putString(PREFERENCE_SELECTED_CURRENCY_KEY, s).commit();
+    }
 }

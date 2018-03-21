@@ -56,7 +56,7 @@ public class TransactionAdapter extends BaseAdapter {
 
         titleTextView.setText(transaction.getTitle());
         dateTextView.setText(DateHelper.milisecondsToDate(transaction.getDate()));
-        amountTextView.setText(CurrencyHelper.returnStringCurrency(transaction.getAmount()));
+        amountTextView.setText(CurrencyHelper.returnStringCurrency(transaction.getAmount(), mContext));
         typeTextView.setText(transaction.getType());
         if(transaction.getType().equals("Income")){
             typeTextView.setTextColor(Color.parseColor("#00C853"));
