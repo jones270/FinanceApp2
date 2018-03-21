@@ -94,6 +94,16 @@
             android:textColor="@color/colorAccent"
             android:text="@string/edit"/>
 
+        <Button
+            android:layout_marginTop="@dimen/large_margin"
+            android:id="@+id/button_delete_profile"
+            android:textSize="@dimen/small_text_size"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:textColor="@color/colorAccent"
+            android:text="@string/delete_profile"/>
+
     </LinearLayout>
 
     <include

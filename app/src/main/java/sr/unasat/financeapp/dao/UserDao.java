@@ -221,4 +221,20 @@ public class UserDao {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         prefs.edit().putString(PREFERENCE_SELECTED_CURRENCY_KEY, s).commit();
     }
+
+    public boolean deleteUser(int id) {
+        try {
+            // Gets the data repository in write mode
+            db = cmDbHelper.getWritableDatabase();
+
+            return db.delete(ComfiContract.UserEntry.TABLE_NAME, ComfiContract.UserEntry.COLUMN_NAME_ID + "= ?", new String[] { String.valueOf(id) }) > 0;
+
+        }catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            cmDbHelper.close();
+        }
+
+        return false;
+    }
 }

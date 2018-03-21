@@ -53,4 +53,5 @@
     <string name="e_mail">E-mail</string>
     <string name="selected_currency">Selected currency</string>
     <string name="update">Update</string>
+    <string name="delete_profile">Delete profile</string>
 </resources>

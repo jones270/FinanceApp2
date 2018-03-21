@@ -56,7 +56,7 @@ public class ProfileFragment extends Fragment{
 
     private LinearLayout profileView, noProfileView, editProfileView;
 
-    private Button btnGoToLogin, btnEditProfile, btnSaveEdit;
+    private Button btnGoToLogin, btnEditProfile, btnDeleteProfile, btnSaveEdit;
 
     private TextView textViewUsername, textViewEmail, textViewSelectedCurrency;
 
@@ -131,6 +131,7 @@ public class ProfileFragment extends Fragment{
     private void initProfileView(){
         btnGoToLogin = view.findViewById(R.id.button_to_login);
         btnEditProfile = view.findViewById(R.id.button_edit_profile);
+        btnDeleteProfile = view.findViewById(R.id.button_delete_profile);
         textViewUsername = view.findViewById(R.id.profile_username);
         textViewEmail = view.findViewById(R.id.profile_email);
         textViewSelectedCurrency = view.findViewById(R.id.profile_selected_currency);
@@ -148,6 +149,21 @@ public class ProfileFragment extends Fragment{
             public void onClick(View v) {
                 profileView.setVisibility(View.GONE);
                 editProfileView.setVisibility(View.VISIBLE);
+            }
+        });
+
+        btnDeleteProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                user = userDao.isLoggedIn();
+
+                boolean status = userDao.deleteUser(user.getId());
+
+                if(status){
+                    Intent intent = new Intent(getActivity(),LoginActivity.class);
+                    startActivity(intent);
+                }
+
             }
         });
     }
